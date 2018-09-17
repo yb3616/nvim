@@ -18,7 +18,7 @@ pip3 install --user neovim
 ## Install [go](https://github.com/zchee/deoplete-go#3-install-latest-of-gocode)
 
 ```bash
-sudo pacman -S golang
+sudo pacman -S go
 export GOPATH=$HOME/.local/share/go
 export PATH=$GOPATH/bin:$PATH
 go get -u github.com/mdempsky/gocode
