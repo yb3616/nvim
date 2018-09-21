@@ -129,9 +129,9 @@ noremap <F3> :Autoformat<CR>
 " 基本配置
 set number
 set cursorline
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set expandtab
 set history=1000
 set nobackup
