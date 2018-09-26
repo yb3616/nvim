@@ -67,6 +67,10 @@ Plug 'w0rp/ale'
 " 函数跳转
 Plug 'jsfaint/gen_tags.vim'
 
+"     插件
+" 缩进线
+Plug 'yggdroot/indentline'
+
 call plug#end()
 
 "     配置
