@@ -1,8 +1,3 @@
-let g:python_host_skip_check=1
-let g:python_host_prog = '/usr/bin/python'
-let g:python3_host_skip_check=1
-let g:python3_host_prog = '/usr/bin/python3'
-
 call plug#begin('~/.local/share/nvim/plugged')
 
 "     插件
@@ -119,6 +114,10 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeWinPos=1
 map <C-n> :NERDTreeToggle<CR>
+map <C-l> :bn<CR>
+map <C-h> :bp<CR>
+map <C-j> :bl<CR>
+map <C-k> :bf<CR>
 
 "     配置
 " Airline
