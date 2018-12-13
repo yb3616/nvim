@@ -1,112 +1,57 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-"     插件
-" 自动补全框架：DEOPLETE
 if has('nvim')
-	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  "     插件
+  " 自动补全框架：NCM2
+  Plug 'ncm2/ncm2'
+  Plug 'roxma/nvim-yarp'
+  autocmd BufEnter * call ncm2#enable_for_buffer()
+  set completeopt=noinsert,menuone,noselect
+  set shortmess+=c
+
+  "     插件
+  " 自动补全插件：PHP
+  Plug 'phpactor/phpactor', { 'branch': 'develop', 'do': 'composer install', 'for': 'php' }
+  Plug 'phpactor/ncm2-phpactor'
+  autocmd BufEnter * call ncm2#enable_for_buffer()
+
+  "     插件
+  " 自动补全插件：GOLANG
+  Plug 'ncm2/ncm2-go'
 endif
-
-"     插件
-" 自动补全插件：GO
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-
-"     插件
-" 自动补全插件：PHP
-Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
-
-"     插件
-" 自动补全插件：JAVASCRIPT
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-
-"     插件
-" 自动补全插件：PYTHON
-Plug 'zchee/deoplete-jedi'
 
 "     插件
 " 格式化代码插件
 Plug 'chiel92/vim-autoformat'
+noremap <F3> :Autoformat<CR>
 
 "     插件
 " 主题样式和语法高亮
-"Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'sjl/badwolf'
-
-"     插件
-" 参数补全 与括号自动补全插件冲突
-"Plug 'tenfyzhong/CompleteParameter.vim'
-
-"     插件
-" 括号等自动补全插件
-Plug 'jiangmiao/auto-pairs'
-
-"     插件
-" Airline
-Plug 'vim-airline/vim-airline'
-
-"     插件
-" 文件树
-Plug 'scrooloose/nerdtree'
-
-"     插件
-" HTML
-Plug 'mattn/emmet-vim'
-Plug 'valloric/matchtagalways'
-Plug 'posva/vim-vue'
-
-"     插件
-" 错误提示
-Plug 'w0rp/ale'
-
-"     插件
-" 函数跳转
-Plug 'jsfaint/gen_tags.vim'
-
-"     插件
-" 缩进线
-Plug 'yggdroot/indentline'
-
-call plug#end()
-
-"     配置
-" DEOPLETE
-let g:deoplete#enable_at_startup = 1
-
-"     配置
-" 参数补全
-"let g:AutoPairs = {'[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
-"inoremap <buffer><silent> ) <C-R>=AutoPairsInsert(')')<CR>
-"inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-"smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-"imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-"smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-"imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-
-"     配置
-" HTML
-let g:mta_filetypes = { 'html' : 1, 'xhtml' : 1, 'xml' : 1, 'jinja' : 1, 'vue' : 1 }
-
-let g:gen_tags#gtags_default_map = 1
-
-"     配置
-" 主题
 if (empty($TMUX))
-	if (has("nvim"))
-		let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-	endif
-	if (has("termguicolors"))
-		set termguicolors
-	endif
+  if (has("nvim"))
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  if (has("termguicolors"))
+    set termguicolors
+  endif
 endif
 syntax on
 let g:badwolf_darkgutter = 1
 let g:badwolf_tabline = 0
 let g:badwolf_html_link_underline = 0
 let g:badwolf_css_props_highlight = 1
-colorscheme badwolf
 
-"     配置
+"     插件
+" Airline
+Plug 'vim-airline/vim-airline'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+"     插件
 " 文件树
+Plug 'scrooloose/nerdtree'
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
@@ -119,22 +64,37 @@ map <C-h> :bp<CR>
 map <C-j> :bl<CR>
 map <C-k> :bf<CR>
 
-"     配置
-" Airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+" HTML
+Plug 'mattn/emmet-vim'
+Plug 'valloric/matchtagalways'
+Plug 'posva/vim-vue'
+let g:mta_filetypes = { 'html' : 1, 'xhtml' : 1, 'xml' : 1, 'jinja' : 1, 'vue' : 1 }
 
-"     配置
-" PHPCD
-let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
-let g:deoplete#ignore_sources.php = ['omni']
+"     插件
+" 错误提示
+Plug 'w0rp/ale'
+let g:ale_lint_on_enter = 0               " 打开文件不检查
+let g:ale_lint_on_text_changed = 'never'  " 修改文件不检查
 
-"     配置
-" Autoformat
-noremap <F3> :Autoformat<CR>
+"     插件
+" 函数跳转
+Plug 'jsfaint/gen_tags.vim'
+Plug 'ncm2/ncm2-gtags'
+let g:gen_tags#gtags_default_map = 1
+
+"     插件
+" 缩进线
+Plug 'yggdroot/indentline'
+
+"     插件
+" 括号等自动补全插件
+Plug 'jiangmiao/auto-pairs'
+
+call plug#end()
 
 "     配置
 " 基本配置
+colorscheme badwolf
 set number
 set cursorline
 set tabstop=2
@@ -153,7 +113,6 @@ set noeb
 set mouse=a
 set showmatch
 set matchtime=1
-set completeopt=menu,preview
 
 au BufReadPost * exe "normal! g`\""
 
